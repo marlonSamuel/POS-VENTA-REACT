@@ -1,26 +1,24 @@
-import { DeleteOutlined, EditOutlined, PlusCircleOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusCircleOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { Button, Col, Pagination, Row, Space, Table, Tooltip } from 'antd';
 import { Typography } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { UIContext } from '../../../context/UIContext';
-import { useProvider } from '../../../hooks/useProvider';
-import { IProvider } from '../../../interfaces/IConf';
+import { useCategoryProduct } from '../../../hooks/useCategoryProduct';
+import { ICategoryProduct, IProvider } from '../../../interfaces/IConf';
 import { CreateOrEdit } from './CreateOrEdit';
 
 const { Title } = Typography;
 
-const initialState : IProvider = {
+const initialState : ICategoryProduct = {
   id: 0,
-  name: '',
-  observation: ''
+  name: ''
 }
 
-export const ProviderPage = () => {
+export const CategoryProductPage = () => {
     //columnas para mostrar en datatable
     const columns = [
       { title: 'Nombre', dataIndex: 'name', key: 'name' },
-      { title: 'Observación', dataIndex: 'observation', key: 'observation' },
       {
         title: 'Acciones',
         dataIndex: 'acciones',
@@ -39,10 +37,10 @@ export const ProviderPage = () => {
     
       //llamar hook para application
     const {loading} = useContext(UIContext);
-    const {items, onChangePag, data, remove, getAll} = useProvider();
+    const {items, onChangePag, data, remove, getAll} = useCategoryProduct();
 
     const [visible, setVisible] = useState(false);
-    const [formData, setFormData] = useState<IProvider>(initialState);
+    const [formData, setFormData] = useState<ICategoryProduct>(initialState);
 
     useEffect(() => {
       getAll();
@@ -58,13 +56,13 @@ export const ProviderPage = () => {
     }
 
     //función para mandar abrir el modal en modo edición
-    const edit = (record: IProvider) => {
+    const edit = (record: ICategoryProduct) => {
       setFormData(record);
       setVisible(true);
     }
 
     //función para remover registro
-    const removeItem = (record:IProvider) => {
+    const removeItem = (record:ICategoryProduct) => {
       Swal.fire({
         title: 'Esta seguro de eliminar registro '+record.name+' ?',
         icon: 'warning',
@@ -91,7 +89,7 @@ export const ProviderPage = () => {
           />
             <Row >
                 <Col span={20}>
-                    <Title level={3}><UsergroupAddOutlined /> PROVEEDORES</Title>
+                    <Title level={3}><QrcodeOutlined /> CATEGORIA PRODUCTOS</Title>
                 </Col>
                 <div style={{}}>
                 <Button onClick={()=>{setVisible(true)}}  icon={<PlusCircleOutlined />} size='small' type="primary">

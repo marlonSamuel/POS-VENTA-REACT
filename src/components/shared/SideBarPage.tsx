@@ -24,7 +24,7 @@ export const SideBarPage = () => {
 
         <SubMenu key="sub1" icon={<SettingOutlined />} title="Configuración">
           <Menu.Item key="s1" icon={<UsergroupAddOutlined />}><Link to="/providers"> Proveedores</Link></Menu.Item>
-          <Menu.Item key="s2" icon={<CheckOutlined />}>Categoría productos</Menu.Item>
+          <Menu.Item key="s2" icon={<CheckOutlined />}><Link to="/category-products"> Categoría productos</Link></Menu.Item>
         </SubMenu>
 
         <SubMenu key="sub2" icon={<QrcodeOutlined />} title="Inventario">

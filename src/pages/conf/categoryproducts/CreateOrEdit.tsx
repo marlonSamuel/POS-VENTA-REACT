@@ -1,16 +1,16 @@
 import { LoadingOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Spin } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { useContext, useEffect, useState } from 'react';
-import { UIContext } from '../../../context/UIContext';
+import { useEffect, useState } from 'react';
+import { useCategoryProduct } from '../../../hooks/useCategoryProduct';
 import { useProvider } from '../../../hooks/useProvider';
-import { IProvider } from '../../../interfaces/IConf';
+import { ICategoryProduct } from '../../../interfaces/IConf';
 
 
 interface IForm {
   visible: boolean,
   onFinish: (success: boolean)=> void,
-  formData: IProvider
+  formData: ICategoryProduct
 }
 
 const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
@@ -18,7 +18,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 export const CreateOrEdit = ({ visible, onFinish, formData }: IForm) => {
 
   const [form] = Form.useForm();
-  const {create, update} = useProvider();
+  const {create, update} = useCategoryProduct();
   const [title, setTitle] = useState('Nuevo registro');
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -99,19 +99,6 @@ export const CreateOrEdit = ({ visible, onFinish, formData }: IForm) => {
             ]}
           >
             <Input name='name' />
-          </Form.Item>
-          <Form.Item
-            name="observation"
-            key="observation"
-            label="Observaciones"
-            rules={[
-              {
-                required: true,
-                message: 'el campo observaciones es requerido!',
-              },
-            ]}
-          >
-            <TextArea rows={2} />
           </Form.Item>
         </Form>
       
