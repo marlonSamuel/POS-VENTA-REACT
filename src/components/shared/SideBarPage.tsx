@@ -29,7 +29,7 @@ export const SideBarPage = () => {
 
         <SubMenu key="sub2" icon={<QrcodeOutlined />} title="Inventario">
           <Menu.Item key="s21" icon={<CheckOutlined />}><Link to="/raw-materials"> Materia prima</Link></Menu.Item>
-          <Menu.Item key="s22" icon={<CheckOutlined />}>Productos</Menu.Item>
+          <Menu.Item key="s22" icon={<CheckOutlined />}><Link to="/products"> Products</Link></Menu.Item>
         </SubMenu>
 
         <SubMenu key="sub3" icon={<DollarCircleFilled />} title="Gastos">
