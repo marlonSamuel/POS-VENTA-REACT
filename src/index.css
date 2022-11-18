@@ -43,3 +43,7 @@
 .steps-action {
   margin-top: 24px;
 }
+
+.ant-layout-sider-zero-width-trigger{
+  background: rgb(112, 104, 62);
+}

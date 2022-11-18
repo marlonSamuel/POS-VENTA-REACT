@@ -28,8 +28,8 @@ export const SideBarPage = () => {
         </SubMenu>
 
         <SubMenu key="sub2" icon={<QrcodeOutlined />} title="Inventario">
-          <Menu.Item key="s21" icon={<CheckOutlined />}>Materia prima</Menu.Item>
-          <Menu.Item key="s22" icon={<CheckOutlined />}>Productos terminados</Menu.Item>
+          <Menu.Item key="s21" icon={<CheckOutlined />}><Link to="/raw-materials"> Materia prima</Link></Menu.Item>
+          <Menu.Item key="s22" icon={<CheckOutlined />}>Productos</Menu.Item>
         </SubMenu>
 
         <SubMenu key="sub3" icon={<DollarCircleFilled />} title="Gastos">

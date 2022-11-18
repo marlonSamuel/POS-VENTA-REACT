@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { CategoryProductPage } from '../pages/conf/categoryproducts/CategoryProductPage';
 import { ProviderPage } from '../pages/conf/providers/ProviderPage';
 import { HomePage } from '../pages/HomePage';
+import { RawMaterialPage } from '../pages/inventory/rawmaterial/RawMaterialPage';
 
 export const SideBarRouter = () => {
     return (
@@ -14,6 +15,7 @@ export const SideBarRouter = () => {
             {/* rutas de configuración */}
            <Route path="/providers" element={<ProviderPage/>}></Route>
            <Route path="/category-products" element={<CategoryProductPage/>}></Route>
+           <Route path="/raw-materials" element={<RawMaterialPage/>}></Route>
         </Routes>
     )
 }

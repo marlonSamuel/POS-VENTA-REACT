@@ -16,21 +16,19 @@ export const DefaultPage = () => {
     const {logged} = useContext(AuthContext);
     const {loading} = useContext(UIContext);
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+    const [collapsed, setCollapsed] = useState(false);
     //const antAvatar = <Avatar src="https://joeschmoe.io/api/v1/random" />
     return (
-        <Spin spinning={loading} size="large" tip="cargando..." indicator={antIcon}>
             <Layout style={{height: '100vh'}}>
                 <Sider
                     className="site-layout-background"
                     breakpoint="lg"
                     collapsedWidth="0"
+                    collapsible collapsed={collapsed}
                     onBreakpoint={broken => {
                         //console.log(broken);
                     }}
-                    onCollapse={(collapsed, type) => {
-                        //console.log(collapsed, type);
-                    }}
-
+                    onCollapse={value => setCollapsed(value)}
                     hidden={!logged}
                 >
                     {/* SIDEBAR MENU*/}
@@ -50,7 +48,6 @@ export const DefaultPage = () => {
                     <FooterPage />
                 </Layout>
             </Layout>
-        </Spin>
     )
 }
 
