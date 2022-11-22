@@ -27,6 +27,17 @@ export const useCategoryProduct = () => {
         setLoading(false);
     } 
 
+        //lista inicial de data sin paginación
+        const _getAll = async(page=0) => {
+            setLoading(true);
+            await api.get('/category-products-all').then(r=> {
+                setItems(r.data);
+            }).catch(e=>{
+                
+            });
+            setLoading(false);
+        }
+
     //obtener app message por id
     const getById = async(id:number) => {
         await api.get<IPaginate>(`/category-products/${id}`).then(r=> {
@@ -90,6 +101,7 @@ export const useCategoryProduct = () => {
         create,
         update,
         remove,
-        getAll
+        getAll,
+        _getAll
     }
 }

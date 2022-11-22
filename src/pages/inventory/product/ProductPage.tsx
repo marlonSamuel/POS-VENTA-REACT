@@ -11,16 +11,16 @@ import Search from 'antd/lib/input/Search';
 import Meta from 'antd/lib/card/Meta';
 import { getCurrencyFormat, loadingIcon } from '../../../helpers/shared';
 import { useProduct } from '../../../hooks/useProduct';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 const baseURL = process.env.REACT_APP_API_URL;
 
 export const ProductPage = () => {
+    const history = useNavigate();
       //llamar hook para application
     const {loading} = useContext(UIContext);
     const {items, onChangePag, data, remove, getAll} = useProduct();
-
-    const [visible, setVisible] = useState(false);
     const [search,setSearch] = useState('');
 
     useEffect(() => {
@@ -65,7 +65,7 @@ export const ProductPage = () => {
                     <Title level={3}><QrcodeOutlined /> PRODUCTOS</Title>
                 </Col>
                 <Col span={4}>
-                <Button onClick={()=>{setVisible(true)}}  icon={<PlusCircleOutlined />} size='small' type="primary">
+                <Button onClick={()=>history('/new-product')}  icon={<PlusCircleOutlined />} size='small' type="primary">
                        Nuevo 
                     </Button>
                 </Col>
@@ -89,7 +89,7 @@ export const ProductPage = () => {
                                     <ShoppingCartOutlined key="sale" /> <b>Vender</b>
                                 </Tooltip>,
                                 <Tooltip title="Editar">
-                                    <EditOutlined key="edit"/>
+                                    <EditOutlined onClick={()=>history('/edit-product/'+item.id)} key="edit"/>
                                 </Tooltip>,
                                 <Tooltip title="Eliminar">
                                     <DeleteOutlined key="delete" onClick={() => removeItem(item)}/>

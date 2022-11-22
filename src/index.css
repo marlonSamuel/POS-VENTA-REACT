@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import '~antd/dist/reset.css';
 
 .btnWarning {
   background: yellow
@@ -10,7 +10,7 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.site-layout-sub-header-background {
+.ant-layout .ant-layout-header {
   background: linear-gradient(87.4deg, rgb(112, 104, 62) 1.9%, rgb(200, 125, 76) 49.7%, rgb(83, 54, 54) 100.5%);
 }
 
@@ -44,6 +44,10 @@
   margin-top: 24px;
 }
 
-.ant-layout-sider-zero-width-trigger{
+.ant-layout .ant-layout-sider-zero-width-trigger{
   background: rgb(112, 104, 62);
 }
+.ant-layout .ant-layout-sider {
+  background: white;
+}
+

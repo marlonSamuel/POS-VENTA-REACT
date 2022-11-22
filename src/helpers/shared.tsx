@@ -1,6 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { notification } from "antd";
-import { NotificationApi } from "antd/lib/notification";
 import CurrencyFormat from "react-currency-format";
 
 export const initialState = {
@@ -34,9 +33,8 @@ export const loadingIcon = () => {
 
 //obtener formato en quetzales para los montos
 export const getCurrencyFormat = (value: number)=>{
-    console.log(value)
     if(value){
-       return <CurrencyFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Q'} />
+       return <CurrencyFormat value={parseFloat(value.toString()).toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={'Q'} />
     }else{
       return  <CurrencyFormat value={0.00} displayType={'text'} thousandSeparator={true} prefix={'Q'} />
     }

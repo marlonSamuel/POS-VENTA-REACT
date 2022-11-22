@@ -1,4 +1,4 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusCircleOutlined, QrcodeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, PlusCircleOutlined, PlusOutlined, PlusSquareOutlined, QrcodeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Card, Col, Divider, Image, List, Pagination, Row, Space, Spin, Table, Tooltip } from 'antd';
 import { Typography } from 'antd';
 import { useContext, useEffect, useMemo, useState } from 'react';
@@ -23,38 +23,12 @@ const initialState : IRawMaterial = {
   price: 0.00
 }
 
-export const RawMaterialPage = () => {
-    //columnas para mostrar en datatable
-    const columns = [
-      {title: 'imagen', dataIndex: 'image', 
-      render: (_: string, record:IRawMaterial) => (   
-        <Image
-            width={70}
-            height={60}
-            src={baseURL!+record.image}
-        />
-      )
-      },
-      { title: 'Nombre', dataIndex: 'name', key: 'name' },
-      { title: 'Descripción', dataIndex: 'description', key: 'description' },
-      { title: 'Precio', dataIndex: 'price', key: 'price' },
-      { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-      {
-        title: 'Acciones',
-        dataIndex: 'acciones',
-        render: (_: string, record:IRawMaterial) => (
-          <Space>
-            <Tooltip title="editar">
-              <Button  onClick={() => edit(record)} type='primary' shape="circle" icon={<EditOutlined />} />
-            </Tooltip>
-            <Tooltip title="eliminar">
-              <Button onClick={() => removeItem(record)} type='primary' shape="circle" icon={<DeleteOutlined />} danger/>
-            </Tooltip>
-          </Space>
-        )   
-      },
-    ];
-    
+interface IAddToProduct {
+  addvisible?: boolean,
+  addMaterial?: (item: IRawMaterial)=> void
+}
+
+export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => {
       //llamar hook para application
     const {loading} = useContext(UIContext);
     const {items, onChangePag, data, remove, getAll} = useRawMaterial();
@@ -146,18 +120,30 @@ export const RawMaterialPage = () => {
                 renderItem={item => (
                 <List.Item>
                     <Card style={{width: 300}} hoverable
-                            actions={[
+                            actions={
+                              !addvisible?
+
+                              [
                                 <Tooltip title="agregar a compras">
                                     <ShoppingCartOutlined key="perfil" /> <b>Comprar</b>
-                                </Tooltip>,
-                                <Tooltip title="Editar">
-                                    <EditOutlined onClick={() => edit(item)}/>
-                                </Tooltip>,
-                                <Tooltip title="Editar">
-                                    <DeleteOutlined key="delete" onClick={() => removeItem(item)}/>
-                                </Tooltip>
-                            ]}
-                        >
+                                  </Tooltip>,
+                                  <Tooltip title="Editar">
+                                      <EditOutlined onClick={() => edit(item)}/>
+                                  </Tooltip>,
+                                  <Tooltip title="Editar">
+                                      <DeleteOutlined key="delete" onClick={() => removeItem(item)}/>
+                                  </Tooltip>,
+
+                                  
+                              ]
+                              :[
+                                <Tooltip title="Agregar a producto">
+                                    <Button onClick={()=> addMaterial!(item)} type="primary" shape="circle" icon={<PlusSquareOutlined />} />
+                                  </Tooltip>
+                              ]
+
+                            }
+                          >
                             <Image
                                     width={250}
                                     height={200}
@@ -186,20 +172,6 @@ export const RawMaterialPage = () => {
                 
 
             </Row>
-            
-            {/* <Table
-                rowKey="id" 
-                columns={columns}
-                loading={loading}
-                size='small'
-                dataSource={items}
-                pagination={false}
-                scroll={{x:20}}
-                /* expandable={{
-                    expandedRowRender: record => 
-                        <p style={{ margin: 0 }}>{record.os}
-                    </p>,
-                  }} /> */}
 
                 <Row justify='end' style={{paddingTop: 10}}>
                     <Pagination

@@ -1,7 +1,7 @@
 import { Header } from 'antd/lib/layout/layout'
 import React, { useContext } from 'react'
 
-import { Avatar, Button, Card, Col, Dropdown, Image, Menu, PageHeader, Row, Tooltip } from 'antd';
+import { Avatar, Button, Card, Col, Dropdown, Image, Menu, Row, Tooltip } from 'antd';
 import { UIContext } from '../../context/UIContext';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { LogoutOutlined, MoreOutlined, UserOutlined } from '@ant-design/icons';
@@ -40,7 +40,7 @@ export const HeaderPage = () => {
     return (
       <>
         {logged &&
-        <PageHeader 
+        <Header 
           className="site-layout-sub-header-background" 
           style={{ padding: 0, height:60}}
           /* avatar={{
@@ -48,11 +48,11 @@ export const HeaderPage = () => {
             src:'https://www.ayctraiding.com/logos/logo2.jpg',
             size: 80,
           }} */
-          extra={[
+          /* extra={[
             <DropdownMenu key="more" />,
-          ]}>
+          ]} */>
             
-        </PageHeader>}
+        </Header>}
       </>
       
     )

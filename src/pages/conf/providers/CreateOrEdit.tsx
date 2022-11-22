@@ -63,7 +63,7 @@ export const CreateOrEdit = ({ visible, onFinish, formData }: IForm) => {
   return (
     
       <Modal
-        visible={visible}
+        open={visible}
         forceRender
         title={title}
         footer={[

@@ -7,6 +7,18 @@ import { IPaginate } from '../interfaces/IApp';
 import { IProduct } from '../interfaces/IInventory';
 
 
+export const _initialState : IProduct = {
+    id: 0,
+    name: '',
+    description: '',
+    photo: '',
+    price: 0.00,
+    cost_price: 0.00,
+    stock: 1,
+    category_product_id: 0,
+    detail: []
+  }
+
 export const useProduct = () => {
    //loading para el datatable
    const {setLoading} = useContext(UIContext);
@@ -14,6 +26,7 @@ export const useProduct = () => {
     const [data, setData] = useState<IPaginate>(initialState);
     //llenar lista
     const [items, setItems] = useState<IProduct[]>([]);
+    const [item, setItem] = useState<IProduct>(_initialState);
     
     //lista inicial de data
     const getAll = async(page=0,search ='') => {
@@ -29,8 +42,8 @@ export const useProduct = () => {
 
     //obtener app message por id
     const getById = async(id:number) => {
-        await api.get<IPaginate>(`/productss/${id}`).then(r=> {
-            
+        await api.get(`/productss/${id}`).then(r=> {
+            setItem(r.data);
         }).catch(e=>{
             
         });
@@ -90,6 +103,8 @@ export const useProduct = () => {
         create,
         update,
         remove,
-        getAll
+        getAll,
+        getById,
+        item
     }
 }
