@@ -77,6 +77,20 @@ export const useProduct = () => {
         return resp;
     }
 
+    //actualizar registro
+    const updateStock = async(data: any) => {
+        let resp = false;
+        setLoading(true);
+        await api.post(`/productss-add-or-decrease`,data).then(r=> {
+            notificationMessage('success','Éxito','Stock '+(data.option === 'a' ? 'aumentado' : 'disminuido')+ ' en una unidad');
+            resp = true;
+        }).catch(e=>{
+            notificationMessage('error','Error',e.error);
+        });
+        setLoading(false);
+        return resp;
+    }
+
     //eliminar registro
     const remove = async(id:number) => {
         let resp = false;
@@ -102,6 +116,7 @@ export const useProduct = () => {
         data,
         create,
         update,
+        updateStock,
         remove,
         getAll,
         getById,

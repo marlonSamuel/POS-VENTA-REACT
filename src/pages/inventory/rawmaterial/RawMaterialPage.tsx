@@ -125,13 +125,13 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
 
                               [
                                 <Tooltip title="agregar a compras">
-                                    <ShoppingCartOutlined key="perfil" /> <b>Comprar</b>
+                                    <ShoppingCartOutlined style={{color: '#007bff'}} key="perfil" />
                                   </Tooltip>,
                                   <Tooltip title="Editar">
-                                      <EditOutlined onClick={() => edit(item)}/>
+                                      <EditOutlined style={{color: '#ffc107'}} onClick={() => edit(item)}/>
                                   </Tooltip>,
-                                  <Tooltip title="Editar">
-                                      <DeleteOutlined key="delete" onClick={() => removeItem(item)}/>
+                                  <Tooltip title="Eliminar">
+                                      <DeleteOutlined style={{color: 'red'}} key="delete" onClick={() => removeItem(item)}/>
                                   </Tooltip>,
 
                                   

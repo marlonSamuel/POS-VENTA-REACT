@@ -9,7 +9,7 @@ export const GeApp = () => {
     <BrowserRouter>
       <AuthProvider>
               <UIProvider>
-                <DefaultPage />
+                <DefaultPage/>
               </UIProvider>
       </AuthProvider>
     </BrowserRouter>

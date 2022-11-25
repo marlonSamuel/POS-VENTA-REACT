@@ -19,7 +19,7 @@ export const DefaultPage = () => {
     const [collapsed, setCollapsed] = useState(false);
     //const antAvatar = <Avatar src="https://joeschmoe.io/api/v1/random" />
     return (
-            <Layout style={{height: '100vh'}}>
+            <Layout style={{height: '100vh', color:'rgb(112, 104, 62)'}}>
                 <Sider
                     className="site-layout-background"
                     breakpoint="lg"
