@@ -4,21 +4,23 @@ import api from '../api/axios';
 import { UIContext } from '../context/UIContext';
 import { initialState, notificationMessage } from '../helpers/shared';
 import { IPaginate } from '../interfaces/IApp';
-import { IProvider } from '../interfaces/IConf';
+import { IProduct } from '../interfaces/IInventory';
+import { IPurcharse } from '../interfaces/ISaleShop';
 
 
-export const useProvider = () => {
+export const usePurcharse = () => {
    //loading para el datatable
    const {setLoading} = useContext(UIContext);
      //obtener data de paginación
     const [data, setData] = useState<IPaginate>(initialState);
     //llenar lista
-    const [items, setItems] = useState<IProvider[]>([]);
+    const [items, setItems] = useState<IPurcharse[]>([]);
+    const [item, setItem] = useState<IPurcharse>();
     
     //lista inicial de data
-    const getAll = async(page=0) => {
+    const getAll = async(page=0,search ='') => {
         setLoading(true);
-        await api.get<IPaginate>('/providers?page='+page).then(r=> {
+        await api.get<IPaginate>('/purchases?page='+page+'&search='+search).then(r=> {
             setData(r.data);
             setItems(r.data.data);
         }).catch(e=>{
@@ -27,32 +29,21 @@ export const useProvider = () => {
         setLoading(false);
     } 
 
-    //lista inicial de data sin paginación
-    const _getAll = async(page=0) => {
-        setLoading(true);
-        await api.get('/providers-all').then(r=> {
-            setItems(r.data);
-        }).catch(e=>{
-            
-        });
-        setLoading(false);
-    }
-
     //obtener app message por id
     const getById = async(id:number) => {
-        await api.get<IPaginate>(`/providers/${id}`).then(r=> {
-            
+        await api.get(`/purchases/${id}`).then(r=> {
+            setItem(r.data);
         }).catch(e=>{
             
         });
     } 
 
     //crear registro
-    const create = async(data: IProvider) => {
+    const create = async(data: any) => {
         let resp = false;
         setLoading(true);
-        await api.post(`/providers`, data).then(r=> {
-            notificationMessage('success','Éxito','mensaje de aplicación creado con éxito');
+        await api.post(`/purchases`, data).then(r=> {
+            notificationMessage('success','Éxito','Compra realizada con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -62,11 +53,11 @@ export const useProvider = () => {
     }
 
     //actualizar registro
-    const update = async(data: IProvider) => {
+    const update = async(data: any) => {
         let resp = false;
         setLoading(true);
-        await api.put(`/providers/${data.id}`,data).then(r=> {
-            notificationMessage('success','Éxito','mensaje de aplicación actualizado con éxito');
+        await api.post(`/purchases-update`,data).then(r=> {
+            notificationMessage('success','Éxito','Producto actualizado con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -79,8 +70,8 @@ export const useProvider = () => {
     const remove = async(id:number) => {
         let resp = false;
         setLoading(true);
-        await api.delete<IPaginate>(`/providers/${id}`).then(r=> {
-            notificationMessage('success','Éxito','mensaje de aplicación eliminado con éxito');
+        await api.delete<IPaginate>(`/purchases/${id}`).then(r=> {
+            notificationMessage('success','Éxito','Compra eliminada con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -90,9 +81,10 @@ export const useProvider = () => {
     }
 
     //capturar cambio de paginación
-    const onChangePag = (current: number, size:number) => {
-        getAll(current);
-    }
+   //capturar cambio de paginación
+   const onChangePag = (current: number, size:number) => {
+    getAll(current);
+}
 
     return {
         items,
@@ -102,6 +94,7 @@ export const useProvider = () => {
         update,
         remove,
         getAll,
-        _getAll
+        getById,
+        item
     }
 }

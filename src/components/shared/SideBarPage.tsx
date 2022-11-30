@@ -41,7 +41,7 @@ export const SideBarPage = () => {
         </SubMenu>
 
         <SubMenu key="sub3" icon={<DollarCircleFilled />} title="Gastos">
-          <Menu.Item key="s31" icon={<ShoppingCartOutlined />}>Compras</Menu.Item>
+          <Menu.Item key="s31" icon={<ShoppingCartOutlined />}><Link to="/purchases"> Compras</Link></Menu.Item>
           <Menu.Item key="s32" icon={<DollarOutlined />}>Otros gastos</Menu.Item>
         </SubMenu>
 

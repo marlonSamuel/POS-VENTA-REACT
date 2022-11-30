@@ -40,3 +40,16 @@ export const getCurrencyFormat = (value: number)=>{
     }
     
 }
+
+export const initBEforeUnLoad = (showExitPrompt: any) => {
+    window.onbeforeunload = (ev: BeforeUnloadEvent) =>{
+        if(showExitPrompt){
+            const e = ev || window.event;
+            e.preventDefault();
+            if(e){
+                e.returnValue = '';
+            }
+            return '';
+        }
+    }
+}

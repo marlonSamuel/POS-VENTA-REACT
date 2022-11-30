@@ -11,6 +11,7 @@ import { debounce } from "lodash"
 import Search from 'antd/lib/input/Search';
 import Meta from 'antd/lib/card/Meta';
 import { getCurrencyFormat, loadingIcon } from '../../../helpers/shared';
+import { SPContext } from '../../../context/shop/ShopContext';
 
 const { Title } = Typography;
 const baseURL = process.env.REACT_APP_API_URL;
@@ -31,8 +32,8 @@ interface IAddToProduct {
 export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => {
       //llamar hook para application
     const {loading} = useContext(UIContext);
+    const {isShop, setIsShop, addRawMaterial} = useContext(SPContext);
     const {items, onChangePag, data, remove, getAll} = useRawMaterial();
-
     const [visible, setVisible] = useState(false);
     const [formData, setFormData] = useState<IRawMaterial>(initialState);
     const [search,setSearch] = useState('');
@@ -85,6 +86,27 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
         () => debounce(searchUser, 300)
     , []);
 
+    const generateShop = (item: IRawMaterial) =>{
+      if(!isShop){
+        Swal.fire({
+          title: '¿Generar nueva orden de compra?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar'
+        }).then(async(result) => {
+          if(result.isConfirmed){
+            setIsShop(true);
+            addRawMaterial(item);
+          }
+        })
+      }else{
+        addRawMaterial(item);
+      }
+    }
+
     return (
       /* mostrar modal de creación */
         <div>
@@ -125,7 +147,7 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
 
                               [
                                 <Tooltip title="agregar a compras">
-                                    <ShoppingCartOutlined style={{color: '#007bff'}} key="perfil" />
+                                    <ShoppingCartOutlined onClick={()=>generateShop(item)} style={{color: '#007bff'}} key="perfil" />
                                   </Tooltip>,
                                   <Tooltip title="Editar">
                                       <EditOutlined style={{color: '#ffc107'}} onClick={() => edit(item)}/>
@@ -133,7 +155,6 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
                                   <Tooltip title="Eliminar">
                                       <DeleteOutlined style={{color: 'red'}} key="delete" onClick={() => removeItem(item)}/>
                                   </Tooltip>,
-
                                   
                               ]
                               :[
@@ -172,7 +193,6 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
                 
 
             </Row>
-
                 <Row justify='end' style={{paddingTop: 10}}>
                     <Pagination
                          responsive
@@ -182,7 +202,6 @@ export const RawMaterialPage = ( {addvisible, addMaterial } : IAddToProduct) => 
                         current={data.current_page}
                     />
                 </Row>
-            
                 </Spin>
         </div>
     )
