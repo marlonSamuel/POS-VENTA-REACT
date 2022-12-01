@@ -1,24 +1,24 @@
-import { Popconfirm, Space } from 'antd';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import api from '../api/axios';
 import { UIContext } from '../context/UIContext';
 import { initialState, notificationMessage } from '../helpers/shared';
 import { IPaginate } from '../interfaces/IApp';
-import { IProvider } from '../interfaces/IConf';
+import { ISale} from '../interfaces/ISaleShop';
 
 
-export const useProvider = () => {
+export const useSale= () => {
    //loading para el datatable
    const {setLoading} = useContext(UIContext);
      //obtener data de paginación
     const [data, setData] = useState<IPaginate>(initialState);
     //llenar lista
-    const [items, setItems] = useState<IProvider[]>([]);
+    const [items, setItems] = useState<ISale[]>([]);
+    const [item, setItem] = useState<ISale>();
     
     //lista inicial de data
-    const getAll = async(page=0) => {
+    const getAll = async(page=0,search ='') => {
         setLoading(true);
-        await api.get<IPaginate>('/providers?page='+page).then(r=> {
+        await api.get<IPaginate>('/sales?page='+page+'&search='+search).then(r=> {
             setData(r.data);
             setItems(r.data.data);
         }).catch(e=>{
@@ -27,32 +27,21 @@ export const useProvider = () => {
         setLoading(false);
     } 
 
-    //lista inicial de data sin paginación
-    const _getAll = async(page=0) => {
-        setLoading(true);
-        await api.get('/providers-all').then(r=> {
-            setItems(r.data);
-        }).catch(e=>{
-            
-        });
-        setLoading(false);
-    }
-
     //obtener app message por id
     const getById = async(id:number) => {
-        await api.get<IPaginate>(`/providers/${id}`).then(r=> {
-            
+        await api.get(`/sales/${id}`).then(r=> {
+            setItem(r.data);
         }).catch(e=>{
             
         });
     } 
 
     //crear registro
-    const create = async(data: IProvider) => {
+    const create = async(data: ISale) => {
         let resp = false;
         setLoading(true);
-        await api.post(`/providers`, data).then(r=> {
-            notificationMessage('success','Éxito','Proveedor creado con éxito');
+        await api.post(`/sales`, data).then(r=> {
+            notificationMessage('success','Éxito','Venta realizada con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -62,11 +51,11 @@ export const useProvider = () => {
     }
 
     //actualizar registro
-    const update = async(data: IProvider) => {
+    const update = async(data: ISale) => {
         let resp = false;
         setLoading(true);
-        await api.put(`/providers/${data.id}`,data).then(r=> {
-            notificationMessage('success','Éxito','Proveedor actualizado con éxito');
+        await api.post(`/sales-update`,data).then(r=> {
+            notificationMessage('success','Éxito','Venta actualizada con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -79,8 +68,8 @@ export const useProvider = () => {
     const remove = async(id:number) => {
         let resp = false;
         setLoading(true);
-        await api.delete<IPaginate>(`/providers/${id}`).then(r=> {
-            notificationMessage('success','Éxito','Proveedor eliminado con éxito');
+        await api.delete<IPaginate>(`/sales/${id}`).then(r=> {
+            notificationMessage('success','Éxito','Venta anulada con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -89,8 +78,8 @@ export const useProvider = () => {
         return resp;
     }
 
-    //capturar cambio de paginación
-    const onChangePag = (current: number, size:number) => {
+   //capturar cambio de paginación
+   const onChangePag = (current: number, size:number) => {
         getAll(current);
     }
 
@@ -102,6 +91,7 @@ export const useProvider = () => {
         update,
         remove,
         getAll,
-        _getAll
+        getById,
+        item
     }
 }

@@ -42,15 +42,14 @@ export const SideBarPage = () => {
 
         <SubMenu key="sub3" icon={<DollarCircleFilled />} title="Gastos">
           <Menu.Item key="s31" icon={<ShoppingCartOutlined />}><Link to="/purchases"> Compras</Link></Menu.Item>
-          <Menu.Item key="s32" icon={<DollarOutlined />}>Otros gastos</Menu.Item>
+          <Menu.Item key="s32" icon={<DollarOutlined />}><Link to="/outcomes/o"> Otros gastos</Link></Menu.Item>
         </SubMenu>
 
         <SubMenu key="sub4" icon={<DollarCircleOutlined />} title="Ingresos">
-          <Menu.Item key="s41" icon={<ShoppingCartOutlined />}>POS - VENTA</Menu.Item>
-          <Menu.Item key="s42" icon={<DollarOutlined />}>Otros ingresos</Menu.Item>
+          <Menu.Item key="s41" icon={<ShoppingCartOutlined />}><Link to="/sales"> Ventas</Link></Menu.Item>
+          <Menu.Item key="s42" icon={<DollarOutlined />}><Link to="/incomes/i"> Otros ingresos</Link></Menu.Item>
         </SubMenu>
 
-        
         <SubMenu key="sub5" icon={<UserOutlined />} title="Usuario">
           <Menu.Item key="s51" icon={<UserAddOutlined />}>Usuarios</Menu.Item>
           <Menu.Item key="s52" icon={<UserOutlined />}>Mi perfil</Menu.Item>

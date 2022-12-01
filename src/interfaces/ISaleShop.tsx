@@ -1,5 +1,5 @@
 import { IProvider } from "./IConf";
-import { IRawMaterial } from "./IInventory";
+import { IProduct, IRawMaterial } from "./IInventory";
 
 export interface IShopDetail {
     raw_material_id: number;
@@ -21,4 +21,33 @@ export interface IPurcharse {
     total: number;
     invoice: string;
     provider: IProvider
+}
+
+export interface ISaleDetail {
+    product_id: number;
+    quantity: number;
+    product_name?: string;
+    image: string;
+    sale_price: number;
+    stock: number;
+    product?: IProduct;
+    discount: number;
+}
+
+export interface ISale {
+    id: number;
+    date: Date;
+    detail: ISaleDetail[];
+    description: string;
+    total: number;
+    discounted: boolean;
+    discount_reason: string;
+}
+
+export interface IMovement {
+    id: number;
+    date: string;
+    description: string;
+    price: number;
+    movement_type: string;
 }

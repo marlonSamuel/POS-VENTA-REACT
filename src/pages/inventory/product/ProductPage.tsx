@@ -12,6 +12,7 @@ import Meta from 'antd/lib/card/Meta';
 import { getCurrencyFormat, loadingIcon } from '../../../helpers/shared';
 import { useProduct } from '../../../hooks/useProduct';
 import { useNavigate } from 'react-router-dom';
+import { SAContext } from '../../../context/sale/SaleContext';
 
 const { Title } = Typography;
 const baseURL = process.env.REACT_APP_API_URL;
@@ -20,6 +21,7 @@ export const ProductPage = () => {
     const history = useNavigate();
       //llamar hook para application
     const {loading} = useContext(UIContext);
+    const {isSale, setIsSale, addProduct} = useContext(SAContext);
     const {items, onChangePag, data, remove, getAll, updateStock} = useProduct();
     const [search,setSearch] = useState('');
     const [vp, setVp] = useState(0);
@@ -72,6 +74,27 @@ export const ProductPage = () => {
         onChangePag(v,search)
     }
 
+    const generateSale = (item: IProduct) =>{
+        if(!isSale){
+          Swal.fire({
+            title: '¿Generar nueva venta?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar'
+          }).then(async(result) => {
+            if(result.isConfirmed){
+              setIsSale(true);
+              addProduct(item);
+            }
+          })
+        }else{
+            addProduct(item);
+        }
+      }
+
     return (
       /* mostrar modal de creación */
         <div>
@@ -102,7 +125,7 @@ export const ProductPage = () => {
                     <Card style={{width: 300}} hoverable
                             actions={[
                                 <Tooltip title="agregar a ventas">
-                                    <ShoppingCartOutlined style={{color: '#007bff'}} key="sale" />
+                                    <ShoppingCartOutlined style={{color: '#007bff'}} onClick={() =>generateSale(item)} key="sale" />
                                 </Tooltip>,
                                 <Tooltip title="Editar">
                                     <EditOutlined style={{color: '#ffc107'}} onClick={()=>history('/edit-product/'+item.id)} key="edit"/>

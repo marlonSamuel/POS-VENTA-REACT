@@ -5,20 +5,21 @@ import { UIContext } from '../context/UIContext';
 import { initialState, notificationMessage } from '../helpers/shared';
 import { IPaginate } from '../interfaces/IApp';
 import { IProvider } from '../interfaces/IConf';
+import { IMovement } from '../interfaces/ISaleShop';
 
 
-export const useProvider = () => {
+export const useMovement = () => {
    //loading para el datatable
    const {setLoading} = useContext(UIContext);
      //obtener data de paginación
     const [data, setData] = useState<IPaginate>(initialState);
     //llenar lista
-    const [items, setItems] = useState<IProvider[]>([]);
+    const [items, setItems] = useState<IMovement[]>([]);
     
     //lista inicial de data
-    const getAll = async(page=0) => {
+    const getAll = async(page=0, search: string) => {
         setLoading(true);
-        await api.get<IPaginate>('/providers?page='+page).then(r=> {
+        await api.get<IPaginate>('/movements?page='+page+'&search='+search).then(r=> {
             setData(r.data);
             setItems(r.data.data);
         }).catch(e=>{
@@ -30,7 +31,7 @@ export const useProvider = () => {
     //lista inicial de data sin paginación
     const _getAll = async(page=0) => {
         setLoading(true);
-        await api.get('/providers-all').then(r=> {
+        await api.get('/movements-all').then(r=> {
             setItems(r.data);
         }).catch(e=>{
             
@@ -40,7 +41,7 @@ export const useProvider = () => {
 
     //obtener app message por id
     const getById = async(id:number) => {
-        await api.get<IPaginate>(`/providers/${id}`).then(r=> {
+        await api.get<IPaginate>(`/movements/${id}`).then(r=> {
             
         }).catch(e=>{
             
@@ -48,11 +49,11 @@ export const useProvider = () => {
     } 
 
     //crear registro
-    const create = async(data: IProvider) => {
+    const create = async(data: IMovement) => {
         let resp = false;
         setLoading(true);
-        await api.post(`/providers`, data).then(r=> {
-            notificationMessage('success','Éxito','Proveedor creado con éxito');
+        await api.post(`/movements`, data).then(r=> {
+            notificationMessage('success','Éxito','Movimiento creado con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -62,11 +63,11 @@ export const useProvider = () => {
     }
 
     //actualizar registro
-    const update = async(data: IProvider) => {
+    const update = async(data: IMovement) => {
         let resp = false;
         setLoading(true);
-        await api.put(`/providers/${data.id}`,data).then(r=> {
-            notificationMessage('success','Éxito','Proveedor actualizado con éxito');
+        await api.put(`/movements/${data.id}`,data).then(r=> {
+            notificationMessage('success','Éxito','Movimiento actualizado con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -79,8 +80,8 @@ export const useProvider = () => {
     const remove = async(id:number) => {
         let resp = false;
         setLoading(true);
-        await api.delete<IPaginate>(`/providers/${id}`).then(r=> {
-            notificationMessage('success','Éxito','Proveedor eliminado con éxito');
+        await api.delete<IPaginate>(`/movements/${id}`).then(r=> {
+            notificationMessage('success','Éxito','Movimiento eliminado con éxito');
             resp = true;
         }).catch(e=>{
             notificationMessage('error','Error',e.error);
@@ -90,8 +91,8 @@ export const useProvider = () => {
     }
 
     //capturar cambio de paginación
-    const onChangePag = (current: number, size:number) => {
-        getAll(current);
+    const onChangePag = (current: number, search:string) => {
+        getAll(current,search);
     }
 
     return {

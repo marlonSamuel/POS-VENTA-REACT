@@ -6,8 +6,11 @@ import { HomePage } from '../pages/HomePage';
 import { CreateOrEditPage } from '../pages/inventory/product/CreateOrEditPage';
 import { ProductPage } from '../pages/inventory/product/ProductPage';
 import { RawMaterialPage } from '../pages/inventory/rawmaterial/RawMaterialPage';
-import { Index } from '../pages/shopping/Index';
+import { MainSale } from '../pages/sale/MainSale';
+import { Index as IndexPurchase } from '../pages/shopping/Index';
+import { Index as IndexSale } from '../pages/sale/Index';
 import { MainShop } from '../pages/shopping/MainShop';
+import { MovementPage } from '../pages/movement/MovementPage';
 
 export const SideBarRouter = () => {
     return (
@@ -24,7 +27,13 @@ export const SideBarRouter = () => {
            <Route path="/new-product" element={<CreateOrEditPage/>}></Route>
            <Route path="/edit-product/:id" element={<CreateOrEditPage/>}></Route>
            <Route path="/main-shop" element={<MainShop/>}></Route>
-           <Route path="/purchases" element={<Index/>}></Route>
+           <Route path="/purchases" element={<IndexPurchase/>}></Route>
+
+           <Route path="/main-sale" element={<MainSale/>}></Route>
+           <Route path="/sales" element={<IndexSale/>}></Route>
+           <Route path="/incomes/:type" key={'income'} element={<MovementPage/>}></Route>
+           <Route path="/outcomes/:type" key={'outcomes'} element={<MovementPage/>}></Route>
+           
         </Routes>
     )
 }

@@ -108,7 +108,7 @@ export const MainShop = () => {
 
     const _setTotal = () => {
         const result = items.reduce((accumulator, current) => {
-            return accumulator + current.quantity * parseFloat((current.purchase_price-current.discount).toString());
+            return accumulator + (current.quantity * parseFloat((current.purchase_price).toString()))-current.discount;
           }, 0);
           setTotal(result);
     }
@@ -262,8 +262,8 @@ export const MainShop = () => {
                             <List.Item>
                                 <Card 
                                     actions={[
-                                        <InputNumber style={{width:'60px'}} min={1} value={item.quantity} onChange={(v)=>onChange(v!,item)} />,
-                                        <InputNumber placeholder='descuento' style={{width:'75px'}} min={0} value={item.discount} onChange={(v)=>onChangeDis(v!,item)} />,
+                                        <InputNumber size="small" style={{width:'60px'}} min={1} value={item.quantity} onChange={(v)=>onChange(v!,item)} />,
+                                        <InputNumber size="small" placeholder='descuento' style={{width:'75px'}} min={0} max={item.purchase_price} value={item.discount} onChange={(v)=>onChangeDis(v!,item)} />,
                                         <Tooltip title="Remover material">
                                             <Button onClick={()=>removeRawMaterial(item)} danger type='primary' icon={<MinusCircleOutlined />} />
                                         </Tooltip>
@@ -277,7 +277,7 @@ export const MainShop = () => {
                                         <Meta
                                             description={<>
                                             <Divider />
-                                                <b style={{color: 'black'}}>{item.material_name} {item.stock}</b><br />
+                                                <b style={{color: 'black'}}>{item.material_name}</b><br />
                                                 <b style={{color: 'rgba(16, 142, 233, 1)'}}>Costo por unidad: {getCurrencyFormat(item.purchase_price)}</b><br />
                                             </>} 
                                     />
