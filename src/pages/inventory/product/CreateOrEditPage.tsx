@@ -352,7 +352,8 @@ export const CreateOrEditPage = () => {
                                 <Meta
                                         description={<>
                                         <Divider />
-                                            <b style={{color: 'black'}}>{item.material_name} {item.stock}</b><br />
+                                            <b style={{color: 'black'}}>{item.material_name}</b><br />
+                                            <b style={{color: 'black'}}>Existencia: {item.stock}</b><br />
                                             <b style={{color: 'rgba(16, 142, 233, 1)'}}>Costo por unidad: {getCurrencyFormat(item.price)}</b><br />
                                             <b style={{color: 'green'}}>Costo utilizado: {getCurrencyFormat(item.cost_price)}</b>
                                         </>} 

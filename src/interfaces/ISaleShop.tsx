@@ -51,3 +51,11 @@ export interface IMovement {
     price: number;
     movement_type: string;
 }
+
+export interface IDashboardResumen {
+    sales: number;
+    purchases: number;
+    incomes: number;
+    outcomes: number;
+    products: number;
+}

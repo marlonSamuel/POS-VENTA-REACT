@@ -11,6 +11,7 @@ import { Index as IndexPurchase } from '../pages/shopping/Index';
 import { Index as IndexSale } from '../pages/sale/Index';
 import { MainShop } from '../pages/shopping/MainShop';
 import { MovementPage } from '../pages/movement/MovementPage';
+import { ContextReportPage, ReportPage } from '../pages/reports/ReportPage';
 
 export const SideBarRouter = () => {
     return (
@@ -33,6 +34,8 @@ export const SideBarRouter = () => {
            <Route path="/sales" element={<IndexSale/>}></Route>
            <Route path="/incomes/:type" key={'income'} element={<MovementPage/>}></Route>
            <Route path="/outcomes/:type" key={'outcomes'} element={<MovementPage/>}></Route>
+
+           <Route path="/reports" key={'report'} element={<ContextReportPage />}></Route>
            
         </Routes>
     )

@@ -49,14 +49,14 @@ export const SideBarPage = () => {
           <Menu.Item key="s41" icon={<ShoppingCartOutlined />}><Link to="/sales"> Ventas</Link></Menu.Item>
           <Menu.Item key="s42" icon={<DollarOutlined />}><Link to="/incomes/i"> Otros ingresos</Link></Menu.Item>
         </SubMenu>
-
+{/* 
         <SubMenu key="sub5" icon={<UserOutlined />} title="Usuario">
           <Menu.Item key="s51" icon={<UserAddOutlined />}>Usuarios</Menu.Item>
           <Menu.Item key="s52" icon={<UserOutlined />}>Mi perfil</Menu.Item>
-        </SubMenu>
+        </SubMenu> */}
 
         <Menu.Item key="m2" icon={<FilePdfOutlined />}>
-          <Link to="/home">
+          <Link to="/reports">
               REPORTES
           </Link>
         </Menu.Item>

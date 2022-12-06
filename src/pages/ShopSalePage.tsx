@@ -13,9 +13,13 @@ export const ShopSalePage = () => {
     const goToPage=(type: string)=>{
         if(type === 'p' && isShop){
             history('/main-shop')
+        }else if(type === 'p' && !isShop){
+            history('/raw-materials')
         }
         if(type === 's' && isSale){
             history('/main-sale')
+        }else if(type === 's' && !isSale){
+            history('/products')
         }
     }
     return (
