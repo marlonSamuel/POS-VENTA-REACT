@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import {Avatar, Button, Col, Pagination, Row, Space, Table, Tooltip, Image } from 'antd';
 import { DeleteOutlined, ShoppingCartOutlined, UsergroupAddOutlined } from '@ant-design/icons';
-import { IPurcharse, ISale } from '../../interfaces/ISaleShop';
+import { IClient, IPurcharse, ISale } from '../../interfaces/ISaleShop';
 import Swal from 'sweetalert2';
 import { usePurcharse } from '../../hooks/usePurcharse';
 import { Typography } from 'antd';
@@ -33,6 +33,13 @@ export const Index = () => {
             )   
         },
         { title: 'Descripcion', dataIndex: 'description', key: 'description' },
+        { title: 'Cliente', dataIndex: 'clientIndex',
+        render: (_: string, record: any) => (
+            <div>
+                {record.client.names+' '+record.client.last_names}
+            </div>
+            
+        ) },
         {
             title: 'Acciones',
             dataIndex: 'acciones',

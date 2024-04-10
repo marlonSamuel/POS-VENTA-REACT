@@ -42,6 +42,7 @@ export interface ISale {
     total: number;
     discounted: boolean;
     discount_reason: string;
+    client_id: number;
 }
 
 export interface IMovement {
@@ -50,6 +51,18 @@ export interface IMovement {
     description: string;
     price: number;
     movement_type: string;
+}
+
+export interface IClient {
+    id: number;
+    names: string;
+    last_names: string;
+    birthday: Date;
+    cui: string;
+    nit: string;
+    cellphone: string;
+    email: string;
+    dir: string;
 }
 
 export interface IDashboardResumen {

@@ -12,6 +12,7 @@ import { Index as IndexSale } from '../pages/sale/Index';
 import { MainShop } from '../pages/shopping/MainShop';
 import { MovementPage } from '../pages/movement/MovementPage';
 import { ContextReportPage, ReportPage } from '../pages/reports/ReportPage';
+import { ClientPage } from '../pages/conf/clients/ClientPage';
 
 export const SideBarRouter = () => {
     return (
@@ -32,6 +33,7 @@ export const SideBarRouter = () => {
 
            <Route path="/main-sale" element={<MainSale/>}></Route>
            <Route path="/sales" element={<IndexSale/>}></Route>
+           <Route path="/clients" element={<ClientPage/>}></Route>
            <Route path="/incomes/:type" key={'income'} element={<MovementPage/>}></Route>
            <Route path="/outcomes/:type" key={'outcomes'} element={<MovementPage/>}></Route>
 

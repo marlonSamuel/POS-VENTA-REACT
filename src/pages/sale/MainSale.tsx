@@ -12,14 +12,12 @@ import { useNavigate } from 'react-router-dom';
 import Title from 'antd/es/typography/Title';
 import Input from 'antd/es/input/Input';
 import TextArea from 'antd/es/input/TextArea';
-import { useProvider } from '../../hooks/useProvider';
-import { IProvider } from '../../interfaces/IConf';
 import { UIContext } from '../../context/UIContext';
 import { BreadCrubPage } from '../../components/shared/BreadCrubPage';
-import { usePurcharse } from '../../hooks/usePurcharse';
 import { SAContext } from '../../context/sale/SaleContext';
-import { ISale, ISaleDetail } from '../../interfaces/ISaleShop';
+import { IClient, ISale, ISaleDetail } from '../../interfaces/ISaleShop';
 import { useSale } from '../../hooks/useSale';
+import { useClient } from '../../hooks/useClient';
 
 const baseURL = process.env.REACT_APP_API_URL;
 const { Option } = Select;
@@ -34,11 +32,14 @@ export const MainSale = () => {
     const {create} = useSale();
     const [isDiscount, setIsDiscount] = useState(false);
 
+    const {_getAll, items : clients} = useClient();
+
     useEffect(()=>{
         setRoutesBC([
             {path: '/products', key: 'products',name: 'Productos',last: false, icon: <QrcodeOutlined />},
             {path: '/create-or-edit',key: 'pay-credits',name: 'Compra',last: true,icon: <ShoppingCartOutlined />},
-        ])
+        ]);
+        _getAll();
     },[]);
 
     useEffect(()=>{
@@ -121,7 +122,7 @@ export const MainSale = () => {
                     >
 
                     <Row gutter={16}>
-                        <Col xs={{span: 24}} lg={{span: 8}}>
+                        <Col xs={{span: 24}} lg={{span: 10}}>
                             <Form.Item
                                     name="date"
                                     key="date"
@@ -137,8 +138,39 @@ export const MainSale = () => {
                                 </Form.Item>
                         </Col>
 
+                        <Col className="gutter-row" xs={{span: 24}} lg={{span: 14}}>
+                            <Form.Item
+                                name="client_id"
+                                key="client_id"
+                                label="Cliente"
+                                rules={[
+                                {
+                                    required: true,
+                                    message: 'el campo cliente es requerido!',
+                                },
+                                ]}
+                            >
+                            <Select
+                                key='s1'
+                                placeholder="Seleccione cliente"
+                                loading={loading}
+                                showSearch
+                                filterOption={(input: any, option: any) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                                allowClear
+                                >
+                                {
+                                    clients.map((c: IClient) => (
+                                        <Option key={c.id} value={c.id}>{c.names+' '+c.last_names}</Option>
+                                    ))
+                                }
+                                </Select>
+                            </Form.Item>
+                        </Col>
+
                         
-                        <Col xs={{span: 24}} lg={{span: 16}}>
+                        <Col xs={{span: 24}} lg={{span: 24}}>
                             <Form.Item
                                 name="description"
                                 key="description"
